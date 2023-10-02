@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "dgSpecHash": "I+9f1GmhiWgzyNX8ixZ5LB5/o4Qd1xSBJIqDf4yxkgczW6iO11sI3Wf6HRnh5F6XqD8b/CahbhdXhRpkeN/iCA==",
+  "success": true,
+  "projectFilePath": "/home/jack/semester 4.5/COMP-4956-Projects/Backend/Backend.csproj",
+  "expectedPackageFiles": [
+    "/home/jack/.nuget/packages/microsoft.aspnetcore.openapi/7.0.11/microsoft.aspnetcore.openapi.7.0.11.nupkg.sha512",
+    "/home/jack/.nuget/packages/microsoft.extensions.apidescription.server/6.0.5/microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
+    "/home/jack/.nuget/packages/microsoft.openapi/1.4.3/microsoft.openapi.1.4.3.nupkg.sha512",
+    "/home/jack/.nuget/packages/swashbuckle.aspnetcore/6.5.0/swashbuckle.aspnetcore.6.5.0.nupkg.sha512",
+    "/home/jack/.nuget/packages/swashbuckle.aspnetcore.swagger/6.5.0/swashbuckle.aspnetcore.swagger.6.5.0.nupkg.sha512",
+    "/home/jack/.nuget/packages/swashbuckle.aspnetcore.swaggergen/6.5.0/swashbuckle.aspnetcore.swaggergen.6.5.0.nupkg.sha512",
+    "/home/jack/.nuget/packages/swashbuckle.aspnetcore.swaggerui/6.5.0/swashbuckle.aspnetcore.swaggerui.6.5.0.nupkg.sha512",
+    "/home/jack/.nuget/packages/microsoft.aspnetcore.app.ref/7.0.11/microsoft.aspnetcore.app.ref.7.0.11.nupkg.sha512"
+  ],
+  "logs": []
+}
