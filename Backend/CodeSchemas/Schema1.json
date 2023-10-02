@@ -1,5 +1,5 @@
 {
-    "Id": "f3423",
+    "SchemaId": "f3423",
     "UserID": "1234",
     "Code": {
         "Function": {
@@ -9,26 +9,26 @@
             ],
             "Body": {
                 "ForRangeLoop": {
-                    "Index" : "i",
+                    "Index": "i",
                     "Parameters": {
-                        "RunFunction" : {
+                        "RunFunction": {
                             "Name": "length",
                             "Parameters": [
                                 "numbersArray"
                             ]
                         }
                     },
-                    "Body" : {
-                        "Variables" : {
+                    "Body": {
+                        "Variables": {
                             "min_index": {
                                 "Equals": "i"
                             }
                         },
                         "ForRangeLoop": {
-                            "Index" : "j",
+                            "Index": "j",
                             "Parameters": {
                                 "Start": {
-                                    "RunFunction" : {
+                                    "RunFunction": {
                                         "Name": "add",
                                         "Parameters": [
                                             "i",
@@ -36,14 +36,14 @@
                                         ]
                                     }
                                 },
-                                "RunFunction" : {
+                                "RunFunction": {
                                     "Name": "length",
                                     "Parameters": [
                                         "numbersArray"
                                     ]
                                 }
                             },
-                            "Body" : {
+                            "Body": {
                                 "If": {
                                     "Condition": {
                                         "RunFunction": {
@@ -95,7 +95,7 @@
         },
         "Variables": {
             "numbers": {
-                "Type" : "array",
+                "Type": "array",
                 "Equals": [
                     64,
                     25,
@@ -105,7 +105,7 @@
                 ]
             },
             "sorted_numbers": {
-                "Equals" : {
+                "Equals": {
                     "RunFunction": {
                         "Name": "selection_sort",
                         "Parameters": [
@@ -115,7 +115,7 @@
                 }
             }
         },
-        "RunFunction" : {
+        "RunFunction": {
             "Name": "print",
             "Parameters": [
                 "sorted_numbers"

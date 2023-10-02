@@ -1,6 +1,10 @@
+using Backend;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+JsonToPython jsonToPython = new JsonToPython();
+jsonToPython.LoadJson();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
