@@ -14,37 +14,51 @@ namespace Backend.Controllers
     {
 
         [HttpGet(Name = "GetPythonResponse")]
-        public string Get()
+        public IActionResult GetPythonFromString(string pythonCode)
         {
-            PythonRunner pyRunner = new PythonRunner();
-            string output = pyRunner.RunPythonFromFile("./PythonOutput/code1.py");
-            return output;
+            try
+            {
+                PythonRunner pyRunner = new PythonRunner();
+                string output = pyRunner.RunPythonFromString(pythonCode);
+                return Ok(output);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpPost(Name = "PostPythonFromFile")]
         public async Task<IActionResult> PostPythonFromFile(List<IFormFile> files)
         {
-            long size = files.Sum(f => f.Length);
-            StringBuilder output = new StringBuilder();
-            foreach (var formFile in files)
+            try
             {
-                if (formFile.Length > 0)
+                long size = files.Sum(f => f.Length);
+                StringBuilder output = new StringBuilder();
+                foreach (var formFile in files)
                 {
-                    var filePath = Path.GetTempFileName();
-                    Console.WriteLine(filePath);
-
-                    using (var stream = System.IO.File.Create(filePath))
+                    if (formFile.Length > 0)
                     {
-                        await formFile.CopyToAsync(stream);
+                        var filePath = Path.GetTempFileName();
+                        Console.WriteLine(filePath);
+
+                        using (var stream = System.IO.File.Create(filePath))
+                        {
+                            await formFile.CopyToAsync(stream);
+                        }
+                        PythonRunner pyRunner = new PythonRunner();
+                        output.Append(pyRunner.RunPythonFromFile(filePath));
                     }
-                    PythonRunner pyRunner = new PythonRunner();
-                    output.Append(pyRunner.RunPythonFromFile(filePath));
                 }
+
+                // Process uploaded files
+                // Don't rely on or trust the FileName property without validation.
+                return Ok(output.ToString());
             }
-            
-            // Process uploaded files
-            // Don't rely on or trust the FileName property without validation.
-            return Ok(output.ToString());
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
     }
 }
