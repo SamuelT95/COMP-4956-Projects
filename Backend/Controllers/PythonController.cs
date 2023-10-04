@@ -12,7 +12,7 @@ namespace Backend.Controllers
     [Route("api/[controller]")]
     public class PythonResponse : ControllerBase
     {
-
+        // [Route("api/getPythonResponse")]
         [HttpGet(Name = "GetPythonResponse")]
         public IActionResult GetPythonFromString(string pythonCode)
         {
@@ -28,28 +28,25 @@ namespace Backend.Controllers
             }
         }
 
+        // [Route("api/postPythonFromFile")]
         [HttpPost(Name = "PostPythonFromFile")]
-        public async Task<IActionResult> PostPythonFromFile(List<IFormFile> files)
+        public async Task<IActionResult> PostPythonFromFile(IFormFile file, string input)
         {
             try
             {
-                long size = files.Sum(f => f.Length);
                 StringBuilder output = new StringBuilder();
-                foreach (var formFile in files)
-                {
-                    if (formFile.Length > 0)
+                    if (file.Length > 0)
                     {
                         var filePath = Path.GetTempFileName();
                         Console.WriteLine(filePath);
 
                         using (var stream = System.IO.File.Create(filePath))
                         {
-                            await formFile.CopyToAsync(stream);
+                            await file.CopyToAsync(stream);
                         }
                         PythonRunner pyRunner = new PythonRunner();
-                        output.Append(pyRunner.RunPythonFromFile(filePath));
+                        output.Append(pyRunner.RunPythonFromFile(filePath, input));
                     }
-                }
 
                 // Process uploaded files
                 // Don't rely on or trust the FileName property without validation.

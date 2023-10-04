@@ -849,24 +849,25 @@
     ]
   },
   "packageFolders": {
-    "/home/jack/.nuget/packages/": {}
+    "/Users/shayanz/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/jack/semester 4.5/COMP-4956-Projects/Backend/Backend.csproj",
+      "projectUniqueName": "/Users/shayanz/semester 4.5/COMP-4956-Projects/Backend/Backend.csproj",
       "projectName": "Backend",
-      "projectPath": "/home/jack/semester 4.5/COMP-4956-Projects/Backend/Backend.csproj",
-      "packagesPath": "/home/jack/.nuget/packages/",
-      "outputPath": "/home/jack/semester 4.5/COMP-4956-Projects/Backend/obj/",
+      "projectPath": "/Users/shayanz/semester 4.5/COMP-4956-Projects/Backend/Backend.csproj",
+      "packagesPath": "/Users/shayanz/.nuget/packages/",
+      "outputPath": "/Users/shayanz/semester 4.5/COMP-4956-Projects/Backend/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/jack/.nuget/NuGet/NuGet.Config"
+        "/Users/shayanz/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
       ],
       "sources": {
+        "/usr/local/share/dotnet/library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -913,12 +914,6 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "downloadDependencies": [
-          {
-            "name": "Microsoft.AspNetCore.App.Ref",
-            "version": "[7.0.11, 7.0.11]"
-          }
-        ],
         "frameworkReferences": {
           "Microsoft.AspNetCore.App": {
             "privateAssets": "none"
@@ -927,7 +922,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/7.0.111/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.203/RuntimeIdentifierGraph.json"
       }
     }
   }
