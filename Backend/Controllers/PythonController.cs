@@ -19,7 +19,7 @@ namespace Backend.Controllers
             try
             {
                 PythonRunner pyRunner = new PythonRunner();
-                string output = pyRunner.RunPythonFromString(pythonCode);
+                string output = pyRunner.RunFromString(pythonCode);
                 return Ok(output);
             }
             catch (Exception e)
@@ -34,7 +34,7 @@ namespace Backend.Controllers
         {
             try
             {
-                StringBuilder output = new StringBuilder();
+                string output = string.Empty;
                     if (file.Length > 0)
                     {
                         var filePath = Path.GetTempFileName();
@@ -45,12 +45,12 @@ namespace Backend.Controllers
                             await file.CopyToAsync(stream);
                         }
                         PythonRunner pyRunner = new PythonRunner();
-                        output.Append(pyRunner.RunPythonFromFile(filePath, input));
+                        output = pyRunner.RunFromFile(filePath, input);
                     }
 
                 // Process uploaded files
                 // Don't rely on or trust the FileName property without validation.
-                return Ok(output.ToString());
+                return Ok(output);
             }
             catch (Exception e)
             {

@@ -16,16 +16,16 @@ namespace Backend
         {
         }
 
-        public string RunPythonFromFile(string path, string input)
+        public string RunFromFile(string path, string input)
         {
             var engine = Python.CreateEngine();
             var scope = engine.CreateScope();
 
             // Redirect the standard output to capture Python's print statements
             var outputStream = new MemoryStream();
-            var inputStream = new MemoryStream(Encoding.UTF8.GetBytes(input));
+            var inputStream = new MemoryStream(Encoding.Default.GetBytes(input));
 
-            engine.Runtime.IO.SetOutput(outputStream, Encoding.UTF8);
+            engine.Runtime.IO.SetOutput(outputStream, Encoding.Default);
             engine.Runtime.IO.SetInput(inputStream, Encoding.Default);
 
             var sourceCode = engine.CreateScriptSourceFromFile(path);
@@ -34,14 +34,14 @@ namespace Backend
             // Retrieve the captured output
             outputStream.Position = 0; // Reset the stream position
             string capturedOutput;
-            using (var reader = new StreamReader(outputStream, Encoding.UTF8))
+            using (var reader = new StreamReader(outputStream, Encoding.Default))
             {
                 capturedOutput = reader.ReadToEnd();
             }
             return capturedOutput;
         }
 
-        public string RunPythonFromString(string code)
+        public string RunFromString(string code)
         {
             var engine = Python.CreateEngine();
             var scope = engine.CreateScope();

@@ -1,26 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "/Users/shayanz/semester 4.5/COMP-4956-Projects/Backend/Backend.csproj": {}
+    "/home/jack/semester 4.5/COMP-4956-Projects/Backend/Backend.csproj": {}
   },
   "projects": {
-    "/Users/shayanz/semester 4.5/COMP-4956-Projects/Backend/Backend.csproj": {
+    "/home/jack/semester 4.5/COMP-4956-Projects/Backend/Backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/shayanz/semester 4.5/COMP-4956-Projects/Backend/Backend.csproj",
+        "projectUniqueName": "/home/jack/semester 4.5/COMP-4956-Projects/Backend/Backend.csproj",
         "projectName": "Backend",
-        "projectPath": "/Users/shayanz/semester 4.5/COMP-4956-Projects/Backend/Backend.csproj",
-        "packagesPath": "/Users/shayanz/.nuget/packages/",
-        "outputPath": "/Users/shayanz/semester 4.5/COMP-4956-Projects/Backend/obj/",
+        "projectPath": "/home/jack/semester 4.5/COMP-4956-Projects/Backend/Backend.csproj",
+        "packagesPath": "/home/jack/.nuget/packages/",
+        "outputPath": "/home/jack/semester 4.5/COMP-4956-Projects/Backend/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/shayanz/.nuget/NuGet/NuGet.Config"
+          "/home/jack/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
         ],
         "sources": {
-          "/usr/local/share/dotnet/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -67,6 +66,12 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[7.0.11, 7.0.11]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
@@ -75,7 +80,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.203/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/7.0.111/RuntimeIdentifierGraph.json"
         }
       }
     }
