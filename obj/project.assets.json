@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\holyc\\Desktop\\4956\\termProject\\COMP-4956-Projects-1\\termProject.csproj",
-      "projectName": "termProject",
-      "projectPath": "C:\\Users\\holyc\\Desktop\\4956\\termProject\\COMP-4956-Projects-1\\termProject.csproj",
+      "projectUniqueName": "C:\\Users\\holyc\\Desktop\\4956\\COMP-4956-Projects\\COMP-4956-Projects.csproj",
+      "projectName": "COMP-4956-Projects",
+      "projectPath": "C:\\Users\\holyc\\Desktop\\4956\\COMP-4956-Projects\\COMP-4956-Projects.csproj",
       "packagesPath": "C:\\Users\\holyc\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\holyc\\Desktop\\4956\\termProject\\COMP-4956-Projects-1\\obj\\",
+      "outputPath": "C:\\Users\\holyc\\Desktop\\4956\\COMP-4956-Projects\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\holyc\\AppData\\Roaming\\NuGet\\NuGet.Config",

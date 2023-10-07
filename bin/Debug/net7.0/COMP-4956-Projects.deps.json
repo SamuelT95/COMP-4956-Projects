@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v7.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v7.0": {
+      "COMP-4956-Projects/1.0.0": {
+        "runtime": {
+          "COMP-4956-Projects.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "COMP-4956-Projects/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

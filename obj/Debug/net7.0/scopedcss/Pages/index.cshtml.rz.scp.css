@@ -1,0 +1,44 @@
+#flexContainer[b-dr5i30qvxp]
+{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    align-content: space-around;
+}
+
+#flexItem1[b-dr5i30qvxp]
+{
+    background-color: lightgray;
+    border: 1px solid black;
+    width: 200px;
+    height: 200px;
+    margin: 10px;
+    line-height: 200px;
+    color: white;
+    font-weight: bold;
+    font-size: 3em;
+    text-align: center;
+}
+
+#flexItem2[b-dr5i30qvxp]
+{
+    background-color: lightgray;
+    border: 1px solid black;
+    width: 200px;
+    height: 200px;
+    margin: 10px;
+    line-height: 200px;
+    color: white;
+    font-weight: bold;
+    font-size: 3em;
+    text-align: center;
+}
+
+p[b-dr5i30qvxp]
+{
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center;
+}
