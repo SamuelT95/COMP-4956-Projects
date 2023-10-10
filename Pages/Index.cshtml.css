@@ -42,3 +42,13 @@ p
     font-weight: bold;
     text-align: center;
 }
+
+.code-block
+{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    align-content: space-around;
+}
