@@ -17,6 +17,14 @@
       "PackagePath": "staticwebassets\\images\\a.png"
     },
     {
+      "Id": "C:\\Users\\holyc\\Desktop\\4956\\COMP-4956-Projects\\wwwroot\\images\\b.png",
+      "PackagePath": "staticwebassets\\images\\b.png"
+    },
+    {
+      "Id": "C:\\Users\\holyc\\Desktop\\4956\\COMP-4956-Projects\\wwwroot\\js\\classes\\CodeBlock.js",
+      "PackagePath": "staticwebassets\\js\\classes\\CodeBlock.js"
+    },
+    {
       "Id": "C:\\Users\\holyc\\Desktop\\4956\\COMP-4956-Projects\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },

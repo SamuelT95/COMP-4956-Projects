@@ -1,23 +1,23 @@
 
 
-export class CodeBlock 
+class CodeBlock 
 {
     static blockTypes = 
     [
         "scope",       // if, else, elif, while
         "function",     // user defined functions, built-in functions
-        "variable",     // variable, literal
+        "value",     // variable, literal
         "assignment",   // =, +=, -=, *=, /=
         "expression",   // +, -, *, /, %
         "equality",     // ==, !=, <, >, <=, >=, ||, &&
         "special"       // input, return
     ]
 
-    constructor(blockType, lineNumber, linePosition) 
+    constructor(blockType, subtype) 
     {
-        this.subType = "none";
+        this.subType = subtype;
 
-        if (blockTypes.includes(blockType)) 
+        if (CodeBlock.blockTypes.includes(blockType)) 
         {
             this.blockType = blockType;
         }
@@ -25,6 +25,23 @@ export class CodeBlock
         {
             throw new Error("Invalid block type");
         }
+
+        this.element = document.createElement("div");
+        this.element.className = "code-block";
+        this.element.dataset.blockType = blockType;
+        this.element.draggable = true;
+        this.element.style.width = 100 + "px";
+        this.element.style.height = 100 + "px";
+        this.element.style.backgroundColor = "red";
+    }
+}
+
+class LineCodeBlock extends CodeBlock
+{
+    constructor(blockType, subType, lineNumber, linePosition)
+    {
+        super(blockType, subType);
+        this.element.className += " line-code-block";
 
         if (Number.isInteger(lineNumber) && lineNumber >= 0) 
         {
@@ -44,17 +61,12 @@ export class CodeBlock
             throw new Error("Invalid line position");
         }
 
-        this.element = document.createElement("div");
-        this.element.className = "code-block";
-        this.element.dataset.blockType = blockType;
         this.element.dataset.lineNumber = lineNumber;
         this.element.dataset.linePosition = linePosition;
-        this.element.draggable = true;
-
     }
 }
 
-export class ScopeBlock extends CodeBlock
+export class ScopeBlock extends LineCodeBlock
 {
     static subTypes = 
     [
@@ -64,9 +76,14 @@ export class ScopeBlock extends CodeBlock
         "while"
     ]
 
-    constructor(lineNumber, linePosition, subType, endLineNumber = lineNumber + 1)
+    constructor(subType, lineNumber, linePosition, endLineNumber = lineNumber + 1)
     {
+        if (!ScopeBlock.subTypes.includes(subType)) 
+        {
+            throw new Error("Invalid sub type");
+        }
         super("scope", subType, lineNumber, linePosition);
+
         this.element.className += " scope-block";
 
         if(Number.isInteger(endLineNumber) && endLineNumber >= 0 && endLineNumber > lineNumber)
@@ -77,21 +94,12 @@ export class ScopeBlock extends CodeBlock
         {
             throw new Error("Invalid end line number");
         }
-
-        if (this.subType.includes(subType)) 
-        {
-            this.subType = subType;
-        }
-        else 
-        {
-            throw new Error("Invalid sub type");
-        }
     }
 }
 
 export class FunctionBlock extends CodeBlock
 {
-    constructor(lineNumber, linePosition, subType, input = null, output = null)
+    constructor(subType, lineNumber, linePosition, input = null, output = null)
     {
         super("function", lineNumber, linePosition);
         this.element.className += " function-block";
@@ -106,5 +114,162 @@ export class FunctionBlock extends CodeBlock
 
         this.element.appendChild(this.inputElement);
         this.element.appendChild(this.outputElement);
+    }
+}
+
+export class ValueBlock extends CodeBlock
+{
+    static subTypes =
+    [
+        "literal",
+        "variable"
+    ]
+
+    constructor(blockType, subType, value, variableName = null)
+    {
+        if (!ValueBlock.subTypes.includes(subType)) 
+        {
+            throw new Error("Invalid sub type");
+        }
+
+        super(blockType, subType);
+
+        this.element.className += " value-block";
+        this.value = value;
+
+        if (subType == "variable")
+        {
+            this.variableName = variableName;
+        }
+    }
+}
+
+export class AssignmentBlock extends LineCodeBlock
+{
+    static subTypes =
+    [
+        "=",
+        "+=",
+        "-=",
+        "*=",
+        "/="
+    ]
+
+    constructor(subType, lineNumber, linePosition)
+    {
+        if (!AssignmentBlock.subTypes.includes(subType)) 
+        {
+            throw new Error("Invalid sub type");
+        }
+
+        super("assignment", subType, lineNumber, linePosition);
+
+        this.element.className += " assignment-block";
+        this.variableElement = document.createElement("div");
+        this.variableElement.className = "var/lit";
+    }
+
+    setVariable(variableBlock)
+    {
+        this.variableElement.children[0] = variableBlock;
+    }
+}
+
+export class FullExpressionBlock extends LineCodeBlock
+{
+    constructor(blockType, subType, lineNumber, linePosition)
+    {
+        super("expression", "full", lineNumber, linePosition);
+
+        this.element.className += " expression-block";
+        this.element.innerText = "expression";
+
+        this.variableElement = document.createElement("div");
+        this.variableElement.className = "var";
+
+        this.expressionElement = document.createElement("p");
+        this.expressionElement.className = "expression";
+        this.expressionElement.innerText = subType;
+
+        this.secondVariableElement = document.createElement("div");
+        this.secondVariableElement.className = "var/lit";
+
+        this.element.appendChild(this.variableElement);
+        this.element.appendChild(this.expressionElement);
+        this.element.appendChild(this.secondVariableElement);
+    }
+}
+
+export class ExpressionBlock extends LineCodeBlock
+{
+    static subTypes =
+    [
+        "+",
+        "-",
+        "*",
+        "/",
+        "%"
+    ]
+
+    constructor(blockType, subType, lineNumber, linePosition)
+    {
+        if (!ExpressionBlock.subTypes.includes(subType)) 
+        {
+            throw new Error("Invalid sub type");
+        }
+
+        super("expression", subType, lineNumber, linePosition);
+
+        this.element.classList.add("expression-block");
+        this.variableElement = document.createElement("div");
+        this.variableElement.className = "var/lit";
+
+        this.expressionElement = document.createElement("p");
+        this.expressionElement.className = "expression";
+        this.expressionElement.innerText = subType;
+
+        this.element.appendChild(this.expressionElement);
+        this.element.appendChild(this.variableElement);
+    }
+}
+
+export class EqualityBlock extends LineCodeBlock
+{
+    static subTypes =
+    [
+        "==",
+        "!=",
+        "<",
+        ">",
+        "<=",
+        ">=",
+        "||",
+        "&&"
+    ]
+
+    constructor(subType, lineNumber, linePosition)
+    {
+        if (!EqualityBlock.subTypes.includes(subType)) 
+        {
+            throw new Error("Invalid sub type");
+        }
+
+        super("equality", subType, lineNumber, linePosition);
+
+        this.element.className += " equality-block";
+
+        this.variableElement = document.createElement("div");
+        this.variableElement.className = "var/lit";
+
+        this.expressionElement = document.createElement("p");
+        this.expressionElement.className = "expression";
+        this.expressionElement.innerText = subType;
+
+        this.secondVariableElement = document.createElement("div");
+        this.secondVariableElement.className = "var/lit";
+
+        this.element.appendChild(this.variableElement);
+        this.element.appendChild(this.expressionElement);
+        this.element.appendChild(this.secondVariableElement);
     }
 }
