@@ -1,4 +1,4 @@
-import * as CodeBlocks from "./classes/CodeBlock.js";
+
 
 function test(){
     alert("Testing");
@@ -17,9 +17,3 @@ function allowDrop(ev) {
     var data = ev.dataTransfer.getData("key");
     ev.target.appendChild(document.getElementById(data));
   }
-
-  let div = document.getElementById("flexItem2");
-
-  let block = new CodeBlocks.ExpressionBlock("expression", "+", 1, 1);
-
-  div.appendChild(block.element);
