@@ -29,3 +29,4 @@ C:\Users\holyc\Desktop\4956\COMP-4956-Projects\obj\Debug\net7.0\COMP-4956-Projec
 C:\Users\holyc\Desktop\4956\COMP-4956-Projects\obj\Debug\net7.0\COMP-4956-Projects.genruntimeconfig.cache
 C:\Users\holyc\Desktop\4956\COMP-4956-Projects\obj\Debug\net7.0\ref\COMP-4956-Projects.dll
 C:\Users\holyc\Desktop\4956\COMP-4956-Projects\obj\Debug\net7.0\scopedcss\Pages\index.cshtml.rz.scp.css
+C:\Users\holyc\Desktop\4956\COMP-4956-Projects\obj\Debug\net7.0\scopedcss\Pages\testing.cshtml.rz.scp.css

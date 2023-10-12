@@ -9,7 +9,8 @@ class CodeBlock
         "value",     // variable, literal
         "assignment",   // =, +=, -=, *=, /=
         "expression",   // +, -, *, /, %
-        "equality",     // ==, !=, <, >, <=, >=, ||, &&
+        "equality",     // ==, !=, <, >, <=, >=
+        "logic",        // ||, &&, !
         "special"       // input, return
     ]
 
@@ -29,10 +30,9 @@ class CodeBlock
         this.element = document.createElement("div");
         this.element.className = "code-block";
         this.element.dataset.blockType = blockType;
-        this.element.draggable = true;
-        this.element.style.width = 100 + "px";
-        this.element.style.height = 100 + "px";
-        this.element.style.backgroundColor = "red";
+        this.element.setAttribute("draggable", "true");
+        this.element.addEventListener("dragstart", function(event){drag(event)});
+        this.element.id = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
     }
 }
 
@@ -109,8 +109,8 @@ export class FunctionBlock extends CodeBlock
         this.inputElement = document.createElement("div");
         this.outputElement = document.createElement("div");
 
-        this.inputElement.className = "var/lit";
-        this.outputElementElement.className = "var";
+        this.inputElement.className = "varlit";
+        this.outputElement.className = "var";
 
         this.element.appendChild(this.inputElement);
         this.element.appendChild(this.outputElement);
@@ -166,7 +166,15 @@ export class AssignmentBlock extends LineCodeBlock
 
         this.element.className += " assignment-block";
         this.variableElement = document.createElement("div");
-        this.variableElement.className = "var/lit";
+        this.variableElement.className = "varlit";
+
+        this.expressionElement = document.createElement("p");
+        this.expressionElement.className = "expression";
+        this.expressionElement.innerText = subType;
+
+        this.element.appendChild(this.variableElement);
+        this.element.appendChild(this.expressionElement);
+
     }
 
     setVariable(variableBlock)
@@ -192,7 +200,7 @@ export class FullExpressionBlock extends LineCodeBlock
         this.expressionElement.innerText = subType;
 
         this.secondVariableElement = document.createElement("div");
-        this.secondVariableElement.className = "var/lit";
+        this.secondVariableElement.className = "varlit";
 
         this.element.appendChild(this.variableElement);
         this.element.appendChild(this.expressionElement);
@@ -222,7 +230,7 @@ export class ExpressionBlock extends LineCodeBlock
 
         this.element.classList.add("expression-block");
         this.variableElement = document.createElement("div");
-        this.variableElement.className = "var/lit";
+        this.variableElement.className = "varlit";
 
         this.expressionElement = document.createElement("p");
         this.expressionElement.className = "expression";
@@ -259,17 +267,23 @@ export class EqualityBlock extends LineCodeBlock
         this.element.className += " equality-block";
 
         this.variableElement = document.createElement("div");
-        this.variableElement.className = "var/lit";
+        this.variableElement.className = "varlit";
 
         this.expressionElement = document.createElement("p");
         this.expressionElement.className = "expression";
         this.expressionElement.innerText = subType;
 
         this.secondVariableElement = document.createElement("div");
-        this.secondVariableElement.className = "var/lit";
+        this.secondVariableElement.className = "varlit";
 
         this.element.appendChild(this.variableElement);
         this.element.appendChild(this.expressionElement);
         this.element.appendChild(this.secondVariableElement);
     }
+}
+
+function drag(ev) 
+{
+    console.log("dragging");
+  ev.dataTransfer.setData("key", ev.target.id);
 }

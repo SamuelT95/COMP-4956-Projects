@@ -20,3 +20,55 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.code-block
+{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-evenly;
+    aspect-ratio: 2/1;
+    width: 10%;
+    border: #0000ff 1px solid;
+}
+
+.varlit
+{
+    width: 25%;
+    aspect-ratio: 1;
+    background-image: linear-gradient(to right,pink, white);
+    border: black 2px solid;
+}
+
+.var
+{
+    width: 25%;
+    aspect-ratio: 1;
+    background-color: red;
+    border: black 2px solid;
+}
+
+.equality-block
+{
+  background-color: orchid;
+}
+
+.expression-block
+{
+  background-color: orange;
+}
+
+.assignment-block
+{
+  background-color: blue;
+}
+
+.function-block
+{
+  background-color: green;
+}
+
+.scope-block
+{
+  background-color: cyan;
+}

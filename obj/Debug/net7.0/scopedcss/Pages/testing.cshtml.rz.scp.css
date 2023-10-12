@@ -1,0 +1,27 @@
+.testContainer[b-ij9v9lo6fy]
+{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 50vh;
+    border: 1px solid black;    
+}
+
+.code-block[b-ij9v9lo6fy]
+{
+    width: 100px;
+    border: #0000ff 1px solid;
+}
+
+.var[b-ij9v9lo6fy]
+{
+    width: 20px;
+    color: #0000ff;
+}
+
+#hi[b-ij9v9lo6fy]
+{
+    width: 200px;
+    color: #0000ff;
+}

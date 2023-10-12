@@ -28,10 +28,6 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/holyc/Desktop/4956/COMP-4956-Projects/Pages/testing.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcdGVzdGluZy5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/holyc/Desktop/4956/COMP-4956-Projects/Pages/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -47,3 +43,7 @@ build_metadata.AdditionalFiles.CssScope = b-dr5i30qvxp
 [C:/Users/holyc/Desktop/4956/COMP-4956-Projects/Pages/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-pm2wphvbi2
+
+[C:/Users/holyc/Desktop/4956/COMP-4956-Projects/Pages/testing.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcdGVzdGluZy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = b-ij9v9lo6fy
