@@ -8,19 +8,19 @@
     "net7.0": []
   },
   "packageFolders": {
-    "C:\\Users\\holyc\\.nuget\\packages\\": {}
+    "C:\\Users\\owner\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\holyc\\Desktop\\4956\\COMP-4956-Projects\\COMP-4956-Projects.csproj",
+      "projectUniqueName": "C:\\Users\\owner\\Downloads\\Comp4956 Project\\COMP-4956-Projects\\COMP-4956-Projects.csproj",
       "projectName": "COMP-4956-Projects",
-      "projectPath": "C:\\Users\\holyc\\Desktop\\4956\\COMP-4956-Projects\\COMP-4956-Projects.csproj",
-      "packagesPath": "C:\\Users\\holyc\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\holyc\\Desktop\\4956\\COMP-4956-Projects\\obj\\",
+      "projectPath": "C:\\Users\\owner\\Downloads\\Comp4956 Project\\COMP-4956-Projects\\COMP-4956-Projects.csproj",
+      "packagesPath": "C:\\Users\\owner\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\owner\\Downloads\\Comp4956 Project\\COMP-4956-Projects\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\holyc\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\owner\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -64,7 +64,11 @@
             "privateAssets": "all"
           }
         },
+<<<<<<< HEAD
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.402\\RuntimeIdentifierGraph.json"
+=======
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
+>>>>>>> 31b47a47d2ed2bb2a58f9c93ca87ad555efca406
       }
     }
   }

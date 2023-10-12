@@ -1,8 +1,12 @@
 {
   "version": 2,
+<<<<<<< HEAD
   "dgSpecHash": "QnQ+IeogG7P7uLohXfTQwuBl9KtQgQoW7Z4+b1ZLHzDAb+h+mv2RAJiKEnrh/Oq/xQTdEzha0z77pJIO4hHf3g==",
+=======
+  "dgSpecHash": "T0bwDZWkDjZa1We2rZpWex3E/SVZxpyM+hVRCeatEZZy0P0Xkvof/9+0+l6TTKhr74gT1dE0udGbUhKRJzXfUQ==",
+>>>>>>> 31b47a47d2ed2bb2a58f9c93ca87ad555efca406
   "success": true,
-  "projectFilePath": "C:\\Users\\holyc\\Desktop\\4956\\COMP-4956-Projects\\COMP-4956-Projects.csproj",
+  "projectFilePath": "C:\\Users\\owner\\Downloads\\Comp4956 Project\\COMP-4956-Projects\\COMP-4956-Projects.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
