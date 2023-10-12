@@ -9,41 +9,41 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = COMP_4956_Projects
 build_property.RootNamespace = COMP_4956_Projects
-build_property.ProjectDir = C:\Users\owner\Downloads\Comp4956 Project\COMP-4956-Projects\
+build_property.ProjectDir = C:\Users\holyc\Desktop\4956\COMP-4956-Projects\
 build_property.RazorLangVersion = 7.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\owner\Downloads\Comp4956 Project\COMP-4956-Projects
+build_property.MSBuildProjectDirectory = C:\Users\holyc\Desktop\4956\COMP-4956-Projects
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/owner/Downloads/Comp4956 Project/COMP-4956-Projects/Pages/Error.cshtml]
+[C:/Users/holyc/Desktop/4956/COMP-4956-Projects/Pages/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/owner/Downloads/Comp4956 Project/COMP-4956-Projects/Pages/Privacy.cshtml]
+[C:/Users/holyc/Desktop/4956/COMP-4956-Projects/Pages/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJpdmFjeS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/owner/Downloads/Comp4956 Project/COMP-4956-Projects/Pages/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/holyc/Desktop/4956/COMP-4956-Projects/Pages/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/owner/Downloads/Comp4956 Project/COMP-4956-Projects/Pages/_ViewImports.cshtml]
+[C:/Users/holyc/Desktop/4956/COMP-4956-Projects/Pages/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/owner/Downloads/Comp4956 Project/COMP-4956-Projects/Pages/_ViewStart.cshtml]
+[C:/Users/holyc/Desktop/4956/COMP-4956-Projects/Pages/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/owner/Downloads/Comp4956 Project/COMP-4956-Projects/Pages/Index.cshtml]
+[C:/Users/holyc/Desktop/4956/COMP-4956-Projects/Pages/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-dr5i30qvxp
 
-[C:/Users/owner/Downloads/Comp4956 Project/COMP-4956-Projects/Pages/Shared/_Layout.cshtml]
+[C:/Users/holyc/Desktop/4956/COMP-4956-Projects/Pages/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-pm2wphvbi2
 
-[C:/Users/owner/Downloads/Comp4956 Project/COMP-4956-Projects/Pages/testing.cshtml]
+[C:/Users/holyc/Desktop/4956/COMP-4956-Projects/Pages/testing.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcdGVzdGluZy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = b-ij9v9lo6fy
