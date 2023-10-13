@@ -1,4 +1,4 @@
-
+import { allowDrop, drop, drag } from "../drag_drop.js";
 
 class CodeBlock 
 {
@@ -46,6 +46,12 @@ class CodeBlock
     addRightBar()
     {
         this.element.appendChild(this.rightBar);
+    }
+
+    newId()
+    {
+        this.element.id = CodeBlock.count;
+        CodeBlock.count++;
     }
 }
 
@@ -286,8 +292,13 @@ export class LogicBlock extends CodeBlock
     }
 }
 
-function drag(ev) 
+export class CodeSlot
 {
-    console.log("dragging");
-  ev.dataTransfer.setData("key", ev.target.id);
+    constructor()
+    {
+        this.element = document.createElement("div");
+        this.element.className = "code-block-slot";
+        this.element.addEventListener("dragover", function(event){allowDrop(event)});
+        this.element.addEventListener("drop", function(event){drop(event)});
+    }
 }

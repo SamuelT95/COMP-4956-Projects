@@ -1,15 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "QnQ+IeogG7P7uLohXfTQwuBl9KtQgQoW7Z4+b1ZLHzDAb+h+mv2RAJiKEnrh/Oq/xQTdEzha0z77pJIO4hHf3g==",
+  "dgSpecHash": "XCLYMqfW0YXmW41d+CN+5VWPlH5dfeh9BBCAB6qsPq89lhVpCUB5gFr7Efn9Cjhew7hn278lkUztKd1ghKdmgg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\holyc\\Desktop\\4956\\COMP-4956-Projects\\COMP-4956-Projects.csproj",
+  "projectFilePath": "C:\\Users\\holyc\\Desktop\\4956\\OLD-COMP-4956-Projects\\COMP-4956-Projects.csproj",
   "expectedPackageFiles": [],
-  "logs": [
-    {
-      "code": "Undefined",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Problem reading the cache file C:\\Users\\holyc\\Desktop\\4956\\COMP-4956-Projects\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
-    }
-  ]
+  "logs": []
 }
