@@ -11,7 +11,7 @@ class CodeBlock
         "assignment",   // =, +=, -=, *=, /=
         "expression",   // +, -, *, /, %
         "equality",     // ==, !=, <, >, <=, >=
-        "logic",        // ||, &&, !
+        "logic",        // ||, &&
         "special"       // input, return
     ]
 
@@ -35,7 +35,17 @@ class CodeBlock
         this.element.setAttribute("draggable", "true");
         this.element.addEventListener("dragstart", function(event){drag(event)});
         this.element.id = CodeBlock.count;
+        this.leftBar = document.createElement("div");
+        this.leftBar.className = "sideBar left";
+        this.element.appendChild(this.leftBar);
+        this.rightBar = document.createElement("div");
+        this.rightBar.className = "sideBar right";
         CodeBlock.count++;
+    }
+
+    addRightBar()
+    {
+        this.element.appendChild(this.rightBar);
     }
 }
 
@@ -60,6 +70,14 @@ export class ScopeBlock extends CodeBlock
         super("scope", subType);
 
         this.element.className += " scope-block";
+
+        this.expressionElement = document.createElement("p");
+        this.expressionElement.className = "expression";
+        this.expressionElement.innerText = subType.toUpperCase();
+
+        this.element.appendChild(this.expressionElement);
+
+        this.addRightBar();
     }
 }
 
@@ -78,6 +96,7 @@ export class FunctionBlock extends CodeBlock
 
         this.element.appendChild(this.inputElement);
         this.element.appendChild(this.outputElement);
+        this.addRightBar();
     }
 }
 
@@ -105,6 +124,8 @@ export class ValueBlock extends CodeBlock
         {
             this.variableName = variableName;
         }
+
+        this.addRightBar();
     }
 }
 
@@ -138,7 +159,7 @@ export class AssignmentBlock extends CodeBlock
 
         this.element.appendChild(this.variableElement);
         this.element.appendChild(this.expressionElement);
-
+        this.addRightBar();
     }
 
     setVariable(variableBlock)
@@ -182,6 +203,7 @@ export class ExpressionBlock extends CodeBlock
         this.element.appendChild(this.variableElement);
         this.element.appendChild(this.expressionElement);
         this.element.appendChild(this.secondVariableElement);
+        this.addRightBar();
     }
 
     makeRightSide()
@@ -205,9 +227,7 @@ export class EqualityBlock extends CodeBlock
         "<",
         ">",
         "<=",
-        ">=",
-        "||",
-        "&&"
+        ">="
     ]
 
     constructor(subType)
@@ -234,6 +254,35 @@ export class EqualityBlock extends CodeBlock
         this.element.appendChild(this.variableElement);
         this.element.appendChild(this.expressionElement);
         this.element.appendChild(this.secondVariableElement);
+        this.addRightBar();
+    }
+}
+
+export class LogicBlock extends CodeBlock
+{
+    static subTypes =
+    [
+        "or",
+        "and"
+    ]
+
+    constructor(subType)
+    {
+        if (!LogicBlock.subTypes.includes(subType)) 
+        {
+            throw new Error("Invalid sub type");
+        }
+
+        super("logic", subType);
+
+        this.element.className += " logic-block";
+
+        this.expressionElement = document.createElement("p");
+        this.expressionElement.className = "expression";
+        this.expressionElement.innerText = subType.toUpperCase();
+
+        this.element.appendChild(this.expressionElement);
+        this.addRightBar();
     }
 }
 

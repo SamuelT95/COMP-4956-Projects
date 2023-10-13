@@ -26,11 +26,20 @@ body {
     display: flex;
     align-items: center;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: space-between;
     aspect-ratio: 2/1;
     width: 10%;
-    border: #0000ff 1px solid;
+
+    text-align: center;
 }
+
+.code-block-slot
+{
+  width: 10%;
+  aspect-ratio: 2/1;
+  border: black 2px solid;
+}
+
 
 .varlit
 {
@@ -60,15 +69,59 @@ body {
 
 .assignment-block
 {
-  background-color: blue;
+  background-color: rgb(110, 75, 239);
 }
 
 .function-block
 {
-  background-color: green;
+  background-color: lightgreen;
 }
 
 .scope-block
 {
   background-color: cyan;
+}
+
+.logic-block
+{
+  background-color: yellow;
+}
+
+.sideBar
+{
+  
+  height: 100%;
+  width: 5%;
+}
+
+.scope-block .right
+{
+  background-color: orchid;
+}
+
+.equality-block .right
+{
+  background-color: yellow;
+} 
+
+.assignment-block .right
+{
+  background-color: orange;
+}
+
+.logic-block .right
+{
+  background-color: orchid;
+}
+
+.code-block p
+{
+  height: 10%;
+}
+
+.line
+{
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }

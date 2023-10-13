@@ -79,6 +79,7 @@ button.accept-policy[b-pm2wphvbi2] {
     justify-content: center;
     height: 50vh;
     border: 1px solid black;    
+    overflow: hidden;
 }
 
 .code-block[b-ij9v9lo6fy]
@@ -98,3 +99,4 @@ button.accept-policy[b-pm2wphvbi2] {
     width: 200px;
     color: #0000ff;
 }
+
