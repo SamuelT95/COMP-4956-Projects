@@ -1,12 +1,8 @@
 import { AssignmentBlock, EqualityBlock, ExpressionBlock, FunctionBlock, LogicBlock, ScopeBlock, CodeSlot } from "./classes/CodeBlock.js";
-
+import { lineMaker } from "./drag_drop.js";
 function test(){
     alert("Testing");
 }
-
-window.allowDrop = allowDrop;
-window.drop = drop;
-window.drag = drag;
 
 let test1 = document.getElementById("test1");
 
@@ -36,18 +32,7 @@ test1.appendChild(block4.element);
 test1.appendChild(block5.element);
 test1.appendChild(block6.element);
 
-let lineContainer = document.getElementById("test2");
 
 lineMaker();
-lineMaker();
 
-function lineMaker()
-{
-    let line = document.createElement("div");
-    line.className = "line";
 
-    let blockSlot = new CodeSlot().element;
-    line.appendChild(blockSlot);
-
-    lineContainer.appendChild(line);
-}
