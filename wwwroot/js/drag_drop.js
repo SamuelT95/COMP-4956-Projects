@@ -109,8 +109,9 @@ function adjustScopeDividers()
 
   for(let divider of dividers)
   {
-    let scopeContainer = divider.parentElement;
-    divider.style.height = scopeContainer.clientHeight + "px";
+    let lineContainer = divider.nextElementSibling;
+
+    divider.style.height = lineContainer.clientHeight + "px";
   }
 }
 

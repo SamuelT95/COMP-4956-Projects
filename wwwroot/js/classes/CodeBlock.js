@@ -371,7 +371,7 @@ export class EqualityBlock extends CodeBlock
 
     hasValidNeighbors(slot)
     {
-        if((isNullOrEmpty(slot.previousElementSibling) || slot.previousElementSibling.dataset.blockType == "logic" || (slot.previousElementSibling.dataset.blockType == "scope" && slot.previousElementSibling.dataset.subType != "else")) && (isNullOrEmpty(slot.nextElementSibling) || slot.nextElementSibling.dataset.blockType == "logic"))
+        if((slot.previousElementSibling.dataset.blockType == "logic" || (slot.previousElementSibling.dataset.blockType == "scope" && slot.previousElementSibling.dataset.subType != "else")) && (isNullOrEmpty(slot.nextElementSibling) || slot.nextElementSibling.dataset.blockType == "logic"))
         {
           return true;
         }
