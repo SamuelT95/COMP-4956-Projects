@@ -1,4 +1,4 @@
-import { CodeSlot,AssignmentBlock, EqualityBlock, FunctionBlock,ExpressionBlock, LogicBlock, ScopeBlock } from "./classes/CodeBlock.js";
+import { CodeSlot, AssignmentBlock, EqualityBlock, FunctionBlock,ExpressionBlock, LogicBlock, ScopeBlock } from "./classes/CodeBlock.js";
   
 export function allowDrop(ev) 
 {
@@ -15,106 +15,146 @@ export function drop(ev)
     return;
   }
 
-
-    // get the stored element id
+  // get the stored element id
   let elementId = ev.dataTransfer.getData("key");
-  let block = document.getElementById(elementId);
+  let draggedBlock = document.getElementById(elementId);
 
-  if(checkIfValidDrop(ev.target, block.dataset.blockType) == false)
+  let element = draggedBlock;
+  if(draggedBlock.className.includes("dummy"))
+  {
+    element = null;
+  }
+
+  let block = null;
+
+  switch(draggedBlock.dataset.blockType)
+  {
+    case "assignment":
+      block = new AssignmentBlock(draggedBlock.dataset.subType, element);
+      break;
+    case "equality":
+      block = new EqualityBlock(draggedBlock.dataset.subType, element);
+      break;
+    case "function":
+      block = new FunctionBlock(draggedBlock.dataset.subType, element);
+      break;
+    case "expression":
+      block = new ExpressionBlock(draggedBlock.dataset.subType, element);
+      break;
+    case "logic":
+      block = new LogicBlock(draggedBlock.dataset.subType, element);
+      break;
+    case "scope":
+      block = new ScopeBlock(draggedBlock.dataset.subType, element);
+      break;
+    default:
+      block = new AssignmentBlock(draggedBlock.dataset.subType, element);
+      break;
+  }
+
+  if(block.hasValidNeighbors(ev.target) == false)
   {
     return;
   }
+  
+  //replace the code slot with the block
+  ev.target.replaceWith(block.element);
 
-  // if were pulling from pallete make a new block
-  if(block.className.includes("dummy"))
+  //check to see if we need to put a new code slot before
+  // if(block.element.previousElementSibling == null && (block.blockType != "scope" && block.blockType != "function"))
+  // {
+  //     let newSlot = new CodeSlot();
+  //     block.element.parentElement.insertBefore(newSlot.element, block.element);
+  // }
+
+  //check to see if we need to put a new code slot after
+  if(block.element.nextElementSibling == null && (block.subType != "else" && block.blockType != "function"))
   {
-    switch(block.dataset.blockType)
-    {
-      case "assignment":
-        block = new AssignmentBlock(block.dataset.subType).element;
-        console.log(block.id);
-        break;
-      case "equality":
-        block = new EqualityBlock(block.dataset.subType).element;
-        break;
-      case "function":
-        block = new FunctionBlock(block.dataset.subType).element;
-        break;
-      case "expression":
-        block = new ExpressionBlock(block.dataset.subType).element;
-        //block.makeRightSide();
-        break;
-      case "logic":
-        block = new LogicBlock(block.dataset.subType).element;
-        break;
-      case "scope":
-        block = new ScopeBlock(block.dataset.subType).element;
-        break;
-      default:
-        break;
-    }
+      let newSlot = new CodeSlot();
+      block.element.parentElement.appendChild(newSlot.element);
   }
 
-    //replace the code slot with the block
-    ev.target.replaceWith(block);
 
-    //check to see if we need to put a new code slot 
-    if(block.previousElementSibling == null)
-    {
-        let newSlot = new CodeSlot();
-        block.parentElement.insertBefore(newSlot.element, block);
-    }
 
-    if(block.nextElementSibling == null)
-    {
-        let newSlot = new CodeSlot();
-        block.parentElement.appendChild(newSlot.element);
-    }
+  //handle creating a new line
+  let lineContainer = block.element.parentElement.closest(".line-container");
+  if(lineContainer == null || lineContainer == undefined)
+  {
+    lineContainer = document.getElementById("test2");
+  }
+  
+  let lineIndex = Array.prototype.indexOf.call(lineContainer.children, block.element.parentElement);
 
-    //handle creating a new line
-    let lineContainer = block.parentElement.parentElement;
-    let lineIndex = Array.prototype.indexOf.call(lineContainer.children, block.parentElement);
+  // make a whole new space for scopes
+  if(block.blockType == "scope")
+  {
+    newScope(lineContainer);
+    lineIndex++;
+  }
 
-    //if we are at the end of the line container make a new line
-    if(lineIndex == lineContainer.children.length - 1)
-    {
-        lineMaker();
-    }
+  //if we are at the end of the line container make a new line
+  if(lineIndex == lineContainer.children.length - 1)
+  {
+      lineMaker(lineContainer);
+  }
 
-    removeEmptyLines();
+  removeEmptyLines();
 
+  adjustScopeDividers();
 }
 
-function checkIfValidDrop(slot, blockType)
+function adjustScopeDividers()
 {
-  switch(blockType)
+  let dividers = document.getElementsByClassName("scope-divider");
+
+  for(let divider of dividers)
   {
-    case "assignment":
-      if(slot.parentElement.className.includes("assignment"))
-      {
-        return false;
-      }
-      break;
+    let scopeContainer = divider.parentElement;
+    divider.style.height = scopeContainer.clientHeight + "px";
   }
 }
+
+function newScope(lineContainer)
+{
+  let scopeContainer = document.createElement("div");
+  scopeContainer.className = "scope-container";
+
+  let scopeDivider = document.createElement("div");
+  scopeDivider.className = "scope-divider";
+  scopeContainer.appendChild(scopeDivider);
+
+
+  let newLineContainer = document.createElement("div");
+  newLineContainer.className = "line-container";
+
+  scopeContainer.appendChild(newLineContainer);
+  
+  lineMaker(newLineContainer);
+  lineContainer.appendChild(scopeContainer);
+}
+
+
 
 function removeEmptyLines()
 {
-  let lines = document.getElementById("test2").getElementsByClassName("line"); 
+  let lines = document.getElementsByClassName("line"); 
 
-  for(let i = 0; i < lines.length - 1; i++)
+  for(let line of lines)
   {
-    let line = lines[i];
-    if(line.getElementsByClassName("code-block-slot").length == line.children.length)
+    if(lineIsEmpty(line) && line.nextElementSibling != null)
     {
       line.remove();
     }
   }
 }
 
-export function lineMaker()
+function lineIsEmpty(line)
 {
-    let lineContainer = document.getElementById("test2");
+  return line.getElementsByClassName("code-block-slot").length == line.children.length;
+}
+
+export function lineMaker(lineContainer)
+{
     let line = document.createElement("div");
     line.className = "line";
 

@@ -25,14 +25,17 @@ block5.element.className += " dummy"
 let block6 = new ScopeBlock("if");
 block6.element.className += " dummy"
 
+let block7 = new ScopeBlock("else");
+block7.element.className += " dummy"
+
 test1.appendChild(block.element);
 test1.appendChild(block2.element);
 test1.appendChild(block3.element);
 test1.appendChild(block4.element);
 test1.appendChild(block5.element);
 test1.appendChild(block6.element);
+test1.appendChild(block7.element);
 
-
-lineMaker();
+lineMaker(document.getElementById("test2"));
 
 

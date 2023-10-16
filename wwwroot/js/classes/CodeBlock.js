@@ -15,7 +15,7 @@ class CodeBlock
         "special"       // input, return
     ]
 
-    constructor(blockType, subtype) 
+    constructor(blockType, subtype, element = null) 
     {
         this.subType = subtype;
 
@@ -28,18 +28,28 @@ class CodeBlock
             throw new Error("Invalid block type");
         }
 
+        if(element != null)
+        {
+            this.element = element;
+            this.leftBar = element.children[0];
+            this.rightBar = element.children[element.children.length - 1];
+            return;
+        }
+
         this.element = document.createElement("div");
         this.element.className = "code-block";
         this.element.dataset.blockType = blockType;
         this.element.dataset.subType = subtype;
         this.element.setAttribute("draggable", "true");
         this.element.addEventListener("dragstart", function(event){drag(event)});
-        this.element.id = CodeBlock.count;
+        
         this.leftBar = document.createElement("div");
         this.leftBar.className = "sideBar left";
         this.element.appendChild(this.leftBar);
         this.rightBar = document.createElement("div");
         this.rightBar.className = "sideBar right";
+
+        this.element.id = "block_" + CodeBlock.count;
         CodeBlock.count++;
     }
 
@@ -52,6 +62,12 @@ class CodeBlock
     {
         this.element.id = CodeBlock.count;
         CodeBlock.count++;
+    }
+
+    hasValidNeighbors(slot)
+    {
+        console.log("hasValidNeighbors not implemented");
+        return true;
     }
 }
 
@@ -67,13 +83,19 @@ export class ScopeBlock extends CodeBlock
         "while"
     ]
 
-    constructor(subType)
+    constructor(subType, element = null)
     {
         if (!ScopeBlock.subTypes.includes(subType)) 
         {
             throw new Error("Invalid sub type");
         }
-        super("scope", subType);
+        super("scope", subType, element);
+
+        if(element != null)
+        {
+            this.expressionElement = element.children[1];
+            return;
+        }
 
         this.element.className += " scope-block";
 
@@ -84,14 +106,42 @@ export class ScopeBlock extends CodeBlock
         this.element.appendChild(this.expressionElement);
 
         this.addRightBar();
+
+        if(this.subType == "else")
+        {
+            this.rightBar.style.backgroundColor = "inherit";
+        }
+    }
+
+    hasValidNeighbors(slot)
+    {
+        if(this.subType == "else" && isNullOrEmpty(slot.previousElementSibling) && isNullOrEmpty(slot.nextElementSibling))
+        {
+          return true;
+        }
+  
+        if((isNullOrEmpty(slot.previousElementSibling) || slot.previousElementSibling.className == "code-block-slot" ) && (isNullOrEmpty(slot.nextElementSibling) || slot.nextElementSibling.dataset.blockType == "equality"))
+        {
+          return true;
+        }
+
+        return false;
     }
 }
 
 export class FunctionBlock extends CodeBlock
 {
-    constructor(subType, input = null, output = null)
+    constructor(subType, element = null)
     {
-        super("function" , subType);
+        super("function" , subType, element);
+
+        if(element != null)
+        {
+            this.inputElement = element.children[1];
+            this.outputElement = element.children[2];
+            return;
+        }
+
         this.element.className += " function-block";
 
         this.inputElement = document.createElement("div");
@@ -104,6 +154,16 @@ export class FunctionBlock extends CodeBlock
         this.element.appendChild(this.outputElement);
         this.addRightBar();
     }
+
+    hasValidNeighbors(slot)
+    {
+        if(isNullOrEmpty(slot.previousElementSibling) && isNullOrEmpty(slot.nextElementSibling))
+        {
+          return true;
+        }
+
+        return false;
+    }
 }
 
 export class ValueBlock extends CodeBlock
@@ -114,14 +174,14 @@ export class ValueBlock extends CodeBlock
         "variable"
     ]
 
-    constructor(blockType, subType, value, variableName = null)
+    constructor(blockType, subType, element = null, variableName = null )
     {
         if (!ValueBlock.subTypes.includes(subType)) 
         {
             throw new Error("Invalid sub type");
         }
 
-        super(blockType, subType);
+        super(blockType, subType, element);
 
         this.element.className += " value-block";
         this.value = value;
@@ -146,15 +206,23 @@ export class AssignmentBlock extends CodeBlock
         "/="
     ]
 
-    constructor(subType)
+    constructor(subType, element = null)
     {
         if (!AssignmentBlock.subTypes.includes(subType)) 
         {
             throw new Error("Invalid sub type");
         }
 
-        super("assignment", subType);
+        super("assignment", subType, element);
 
+        if(element != null)
+        {
+            this.variableElement = element.children[1];
+            this.expressionElement = element.children[2];
+            return;
+        }
+
+        
         this.element.className += " assignment-block";
         this.variableElement = document.createElement("div");
         this.variableElement.className = "varlit";
@@ -168,10 +236,22 @@ export class AssignmentBlock extends CodeBlock
         this.addRightBar();
     }
 
-    setVariable(variableBlock)
+    hasValidNeighbors(slot)
     {
-        this.variableElement.children[0] = variableBlock;
+        if(isNullOrEmpty(slot.previousElementSibling) && (isNullOrEmpty(slot.nextElementSibling) || slot.nextElementSibling.dataset.blockType == "expression"))
+        {
+          return true;
+        }
+        //this.leftBar = this.leftBar;
+        return false;
     }
+
+    // setVariable(variableBlock)
+    // {
+    //     this.variableElement.children[0] = variableBlock;
+    // }
+
+
 }
 
 export class ExpressionBlock extends CodeBlock
@@ -185,14 +265,22 @@ export class ExpressionBlock extends CodeBlock
         "%"
     ]
 
-    constructor(subType)
+    constructor(subType, element = null)
     {
         if (!ExpressionBlock.subTypes.includes(subType))
         {
             throw new Error("Invalid sub type");
         }
 
-        super("expression", subType);
+        super("expression", subType, element);
+
+        if(element != null)
+        {
+            this.variableElement = element.children[1];
+            this.expressionElement = element.children[2];
+            this.secondVariableElement = element.children[3];
+            return;
+        }
 
         this.element.className += " expression-block";
 
@@ -221,6 +309,16 @@ export class ExpressionBlock extends CodeBlock
     {
         this.ariableElement.hidden = false;
     }
+
+    hasValidNeighbors(slot)
+    {
+        if((isNullOrEmpty(slot.previousElementSibling) || slot.previousElementSibling.dataset.blockType == "expression" || slot.previousElementSibling.dataset.blockType == "assignment") && (isNullOrEmpty(slot.nextElementSibling) || slot.nextElementSibling.dataset.blockType == "expression" )) 
+        {
+          return true;
+        }
+
+        return false;
+    }
 }
 
 
@@ -236,14 +334,22 @@ export class EqualityBlock extends CodeBlock
         ">="
     ]
 
-    constructor(subType)
+    constructor(subType, element = null)
     {
         if (!EqualityBlock.subTypes.includes(subType)) 
         {
             throw new Error("Invalid sub type");
         }
 
-        super("equality", subType);
+        super("equality", subType, element);
+
+        if(element != null)
+        {   
+            this.variableElement = element.children[1];
+            this.expressionElement = element.children[2];
+            this.secondVariableElement = element.children[3];
+            return;
+        }
 
         this.element.className += " equality-block";
 
@@ -262,6 +368,16 @@ export class EqualityBlock extends CodeBlock
         this.element.appendChild(this.secondVariableElement);
         this.addRightBar();
     }
+
+    hasValidNeighbors(slot)
+    {
+        if((isNullOrEmpty(slot.previousElementSibling) || slot.previousElementSibling.dataset.blockType == "logic" || (slot.previousElementSibling.dataset.blockType == "scope" && slot.previousElementSibling.dataset.subType != "else")) && (isNullOrEmpty(slot.nextElementSibling) || slot.nextElementSibling.dataset.blockType == "logic"))
+        {
+          return true;
+        }
+
+        return false;
+    }
 }
 
 export class LogicBlock extends CodeBlock
@@ -272,14 +388,20 @@ export class LogicBlock extends CodeBlock
         "and"
     ]
 
-    constructor(subType)
+    constructor(subType, element = null)
     {
         if (!LogicBlock.subTypes.includes(subType)) 
         {
             throw new Error("Invalid sub type");
         }
 
-        super("logic", subType);
+        super("logic", subType, element);
+
+        if(element != null)
+        {
+            this.expressionElement = element.children[1];
+            return;
+        }
 
         this.element.className += " logic-block";
 
@@ -289,6 +411,16 @@ export class LogicBlock extends CodeBlock
 
         this.element.appendChild(this.expressionElement);
         this.addRightBar();
+    }
+
+    hasValidNeighbors(slot)
+    {
+        if((isNullOrEmpty(slot.previousElementSibling) || slot.previousElementSibling.dataset.blockType == "equality") && (isNullOrEmpty(slot.nextElementSibling) || slot.nextElementSibling.dataset.blockType == "equality"))
+        {
+          return true;
+        }
+
+        return false;
     }
 }
 
@@ -301,4 +433,16 @@ export class CodeSlot
         this.element.addEventListener("dragover", function(event){allowDrop(event)});
         this.element.addEventListener("drop", function(event){drop(event)});
     }
+
+    
+}
+
+function isNullOrEmpty(slot)
+{
+  if(slot == null || slot.className == "code-block-slot")
+  {
+    return true;
+  }
+
+  return false;
 }
