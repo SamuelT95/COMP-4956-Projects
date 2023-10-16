@@ -31,6 +31,12 @@ body {
     width: 10vw;
 
     text-align: center;
+
+    border-top-style: solid;
+    border-bottom-style: solid;
+    
+    border-width: 2px;
+    border-color: black;
 }
 
 .code-block-slot
@@ -43,9 +49,9 @@ body {
 
 .varlit
 {
-    width: 25%;
+    height: 45%;
     aspect-ratio: 1;
-    background-image: linear-gradient(to right,pink, white);
+    background-image: linear-gradient(to right, palevioletred, white);
     border: black 2px solid;
 }
 
@@ -80,7 +86,10 @@ body {
 .scope-block
 {
   background-color: cyan;
+  border: blue;
 }
+
+
 
 .logic-block
 {
@@ -116,7 +125,9 @@ body {
 
 .code-block p
 {
-  height: 10%;
+  height: fit-content;
+  font-size: 2vw;
+  font-weight: bold;
 }
 
 .line
@@ -131,6 +142,7 @@ body {
 {
   width: 10vw;
   background-color: cyan;
+  background-image: linear-gradient(90deg, transparent 95%, black 5%);
 }
 
 .scope-container
@@ -140,4 +152,23 @@ body {
   align-items: center;
   justify-content: center;
   width: min-content;
+}
+
+.else
+{
+  background-image: linear-gradient(90deg, cyan 95%, black 5%);
+}
+
+.threequarters
+{
+  width: 6.25vw;
+  aspect-ratio: 5/4;
+  justify-content: space-between;
+}
+
+.half
+{
+  width: 5vw;
+  aspect-ratio: 4/4;
+  justify-content: space-between;
 }

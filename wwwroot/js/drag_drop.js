@@ -19,6 +19,7 @@ export function drop(ev)
   let elementId = ev.dataTransfer.getData("key");
   let draggedBlock = document.getElementById(elementId);
 
+  // if were pulling from the toolbox we need to make a new block
   let element = draggedBlock;
   if(draggedBlock.className.includes("dummy"))
   {
@@ -40,6 +41,10 @@ export function drop(ev)
       break;
     case "expression":
       block = new ExpressionBlock(draggedBlock.dataset.subType, element);
+      if(ev.target.previousElementSibling != null && ev.target.previousElementSibling.dataset.blockType == "expression")
+      {
+        block.makeRightSide();
+      }
       break;
     case "logic":
       block = new LogicBlock(draggedBlock.dataset.subType, element);
@@ -52,6 +57,7 @@ export function drop(ev)
       break;
   }
 
+  // make sure we dot put blocks in the wrong places
   if(block.hasValidNeighbors(ev.target) == false)
   {
     return;
@@ -60,6 +66,10 @@ export function drop(ev)
   //replace the code slot with the block
   ev.target.replaceWith(block.element);
 
+  // user should never be able to create bad logic
+  removeBadLogic(block.element);
+
+  //defunct
   //check to see if we need to put a new code slot before
   // if(block.element.previousElementSibling == null && (block.blockType != "scope" && block.blockType != "function"))
   // {
@@ -73,8 +83,6 @@ export function drop(ev)
       let newSlot = new CodeSlot();
       block.element.parentElement.appendChild(newSlot.element);
   }
-
-
 
   //handle creating a new line
   let lineContainer = block.element.parentElement.closest(".line-container");
@@ -100,7 +108,29 @@ export function drop(ev)
 
   removeEmptyLines();
 
+  // responsible for keeping scope blocks the right size
   adjustScopeDividers();
+}
+
+function removeBadLogic(element)
+{
+  let previousElementSibling = element.previousElementSibling;
+
+  if(previousElementSibling != null && previousElementSibling.previousElementSibling != null)
+  {
+    if(previousElementSibling.previousElementSibling.dataset.blockType == "scope" && previousElementSibling.dataset.blockType == "logic")
+    {
+      previousElementSibling.remove();
+    }
+    else if(previousElementSibling.previousElementSibling.dataset.blockType == "logic" && previousElementSibling.dataset.blockType == "logic")
+    {
+      previousElementSibling.remove();
+    }
+    else if(previousElementSibling.previousElementSibling.dataset.blockType == "equality" && previousElementSibling.dataset.blockType == "equality")
+    {
+      previousElementSibling.remove();
+    }
+  }
 }
 
 function adjustScopeDividers()

@@ -66,7 +66,6 @@ class CodeBlock
 
     hasValidNeighbors(slot)
     {
-        console.log("hasValidNeighbors not implemented");
         return true;
     }
 }
@@ -97,7 +96,16 @@ export class ScopeBlock extends CodeBlock
             return;
         }
 
-        this.element.className += " scope-block";
+        
+        if(subType == "else")
+        {
+            this.element.className += " else";
+        }
+        else
+        {
+            this.element.className += " scope-block";
+
+        }
 
         this.expressionElement = document.createElement("p");
         this.expressionElement.className = "expression";
@@ -285,7 +293,7 @@ export class ExpressionBlock extends CodeBlock
         this.element.className += " expression-block";
 
         this.variableElement = document.createElement("div");
-        this.variableElement.className = "var";
+        this.variableElement.className = "varlit";
 
         this.expressionElement = document.createElement("p");
         this.expressionElement.className = "expression";
@@ -303,6 +311,7 @@ export class ExpressionBlock extends CodeBlock
     makeRightSide()
     {
         this.variableElement.hidden = true;
+        this.element.className += " threequarters";
     }
 
     makeLeftSide()
