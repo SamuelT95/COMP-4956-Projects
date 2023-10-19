@@ -7,7 +7,6 @@ class CodeBlock
     [
         "scope",       // if, else, elif, while
         "function",     // user defined functions, built-in functions
-        "value",     // variable, literal
         "assignment",   // =, +=, -=, *=, /=
         "expression",   // +, -, *, /, %
         "equality",     // ==, !=, <, >, <=, >=
@@ -58,15 +57,37 @@ class CodeBlock
         this.element.appendChild(this.rightBar);
     }
 
-    newId()
+    checkNeighbors(slot, goodLeftSide, goodRightSide)
     {
-        this.element.id = CodeBlock.count;
-        CodeBlock.count++;
+        if(slot.previousElementSibling != null && goodLeftSide.includes(slot.previousElementSibling.dataset.blockType))
+        {
+            return CodeBlock.checkRightSide(slot, goodRightSide);
+        }
+        else if(slot.previousElementSibling == null && goodLeftSide.includes(null))
+        {
+            return CodeBlock.checkRightSide(slot, goodRightSide);
+        }
+        else
+        {
+            return false;
+        }
+
     }
 
-    hasValidNeighbors(slot)
+    static checkRightSide(slot, goodRightSide)
     {
-        return true;
+        if(slot.nextElementSibling == null)
+        {
+            return true;
+        }
+        else if(slot.nextElementSibling != null && goodRightSide.includes(slot.nextElementSibling.dataset.blockType))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }
 
@@ -80,6 +101,17 @@ export class ScopeBlock extends CodeBlock
         "elif",
         "else",
         "while"
+    ]
+
+    static goodLeftSide =
+    [
+        null
+    ]
+
+    static goodRightSide =
+    [
+        null,
+        "equality"
     ]
 
     constructor(subType, element = null)
@@ -123,22 +155,23 @@ export class ScopeBlock extends CodeBlock
 
     hasValidNeighbors(slot)
     {
-        if(this.subType == "else" && isNullOrEmpty(slot.previousElementSibling) && isNullOrEmpty(slot.nextElementSibling))
-        {
-          return true;
-        }
-  
-        if((isNullOrEmpty(slot.previousElementSibling) || slot.previousElementSibling.className == "code-block-slot" ) && (isNullOrEmpty(slot.nextElementSibling) || slot.nextElementSibling.dataset.blockType == "equality"))
-        {
-          return true;
-        }
-
-        return false;
+        return this.checkNeighbors(slot, ScopeBlock.goodLeftSide, ScopeBlock.goodRightSide)
     }
 }
 
 export class FunctionBlock extends CodeBlock
 {
+    static goodLeftSide =
+    [
+        null
+    ]
+
+    static goodRightSide 
+    [
+        null
+    ]
+    
+
     constructor(subType, element = null)
     {
         super("function" , subType, element);
@@ -165,41 +198,138 @@ export class FunctionBlock extends CodeBlock
 
     hasValidNeighbors(slot)
     {
-        if(isNullOrEmpty(slot.previousElementSibling) && isNullOrEmpty(slot.nextElementSibling))
-        {
-          return true;
-        }
-
-        return false;
+        return this.checkNeighbors(slot, FunctionBlock.goodLeftSide, FunctionBlock.goodRightSide)
     }
 }
 
-export class ValueBlock extends CodeBlock
+export class LiteralBlock
 {
-    static subTypes =
+    static count = 0;
+    static types = 
     [
-        "literal",
-        "variable"
+        "string",
+        "number",
+        "boolean",
+        "float"
     ]
 
-    constructor(blockType, subType, element = null, variableName = null )
+    constructor(type, value, element = null)
     {
-        if (!ValueBlock.subTypes.includes(subType)) 
+        if (!LiteralBlock.types.includes(type))
         {
             throw new Error("Invalid sub type");
         }
 
-        super(blockType, subType, element);
-
-        this.element.className += " value-block";
-        this.value = value;
-
-        if (subType == "variable")
+        if(element != null)
         {
-            this.variableName = variableName;
+            this.element = element;
+            this.valueInput = element.children[0];
+            this.type = element.dataset.subType;
+            this.value = element.children[0].value;
+            return;
         }
 
-        this.addRightBar();
+        this.value = value;
+        this.type = type;
+
+        this.element = document.createElement("div");
+        this.element.id = "literal_" + LiteralBlock.count;
+        LiteralBlock.count++;
+        this.element.className = "literal-block";
+        this.element.dataset.blockType = "literal";
+        this.element.dataset.subType = type;
+        this.element.setAttribute("draggable", "true");
+
+        switch(type)
+        {
+            case "string":
+                this.valueInput = getStringInput();
+                break;
+            case "number":
+                this.valueInput = getNumberInput();
+                break;
+            case "boolean":
+                this.valueInput = getBooleanInput();
+                break;
+            case "float":
+                this.valueInput = getFloatInput();
+                break;
+        }
+
+        this.valueInput.value = value;
+        this.element.appendChild(this.valueInput);
+    }
+
+    getNumberInput()
+    {
+        let input = document.createElement("input");
+        input.type = "number";
+        input.className = "number-input";
+        return input;
+    }
+
+    getBooleanInput()
+    {
+        let input = document.createElement("input");
+        input.type = "checkbox";
+        input.className = "boolean-input";
+        return input;
+    }
+
+    getStringInput()
+    {
+        let input = document.createElement("input");
+        input.type = "text";
+        input.className = "string-input";
+        return input;
+    }
+
+    getFloatInput()
+    {
+        let input = document.createElement("input");
+        input.type = "number";
+        input.className = "float-input";
+        input.step = "any";
+        return input;
+    }
+}
+
+
+
+export class VariableBlock
+{
+    static count = 0;
+
+    constructor(type, value, name, element = null)
+    {
+        if(element != null)
+        {
+            this.element = element;
+            this.value = element.children[0];
+            this.valueLabel = element.children[1];
+            this.value.hidden = true;
+            return;
+        }
+
+        this.element = document.createElement("div");
+        this.element.className += "variable-" + name;
+        this.element.id = "variable_" + VariableBlock.count;
+        VariableBlock.count++;
+
+        this.element.dataset.blockType = "variable";
+        this.element.dataset.name = name;
+        this.element.dataset.type = type;
+
+        this.valueLabel = document.createElement("p");
+        this.valueLabel.className = "value-label";
+        this.valueLabel.innerText = name;
+
+        this.value = document.createElement("p");
+        this.value.className = "value";
+        this.value.innerText = value;
+
+        this.element.appendChild(this.value);
+        this.element.appendChild(this.valueLabel);
     }
 }
 
@@ -212,6 +342,17 @@ export class AssignmentBlock extends CodeBlock
         "-=",
         "*=",
         "/="
+    ]
+
+    static goodLeftSide =
+    [
+        null
+    ]
+
+    static goodRightSide =
+    [
+        "expression",
+        null
     ]
 
     constructor(subType, element = null)
@@ -246,20 +387,8 @@ export class AssignmentBlock extends CodeBlock
 
     hasValidNeighbors(slot)
     {
-        if(isNullOrEmpty(slot.previousElementSibling) && (isNullOrEmpty(slot.nextElementSibling) || slot.nextElementSibling.dataset.blockType == "expression"))
-        {
-          return true;
-        }
-        //this.leftBar = this.leftBar;
-        return false;
+        return this.checkNeighbors(slot, AssignmentBlock.goodLeftSide, AssignmentBlock.goodRightSide);
     }
-
-    // setVariable(variableBlock)
-    // {
-    //     this.variableElement.children[0] = variableBlock;
-    // }
-
-
 }
 
 export class ExpressionBlock extends CodeBlock
@@ -270,7 +399,30 @@ export class ExpressionBlock extends CodeBlock
         "-",
         "*",
         "/",
-        "%"
+        "%",
+        "none"
+    ]
+
+    static goodLeftSide =
+    [
+        "expression"
+    ]
+
+    static goodRightSide =
+    [
+        "expression",
+        null
+    ]
+
+    static goodRightSideNone =
+    [
+        "expression",
+        null
+    ]
+
+    static goodLeftSideNone =
+    [
+        "assignment"
     ]
 
     constructor(subType, element = null)
@@ -284,9 +436,6 @@ export class ExpressionBlock extends CodeBlock
 
         if(element != null)
         {
-            this.variableElement = element.children[1];
-            this.expressionElement = element.children[2];
-            this.secondVariableElement = element.children[3];
             return;
         }
 
@@ -295,38 +444,27 @@ export class ExpressionBlock extends CodeBlock
         this.variableElement = document.createElement("div");
         this.variableElement.className = "varlit";
 
-        this.expressionElement = document.createElement("p");
-        this.expressionElement.className = "expression";
-        this.expressionElement.innerText = subType;
-
-        this.secondVariableElement = document.createElement("div");
-        this.secondVariableElement.className = "varlit";
+        if(subType != "none")
+        {
+            this.expressionElement = document.createElement("p");
+            this.expressionElement.className = "expression";
+            this.expressionElement.innerText = subType;
+            this.element.appendChild(this.expressionElement);
+        }
 
         this.element.appendChild(this.variableElement);
-        this.element.appendChild(this.expressionElement);
-        this.element.appendChild(this.secondVariableElement);
+
         this.addRightBar();
-    }
-
-    makeRightSide()
-    {
-        this.variableElement.hidden = true;
-        this.element.className += " threequarters";
-    }
-
-    makeLeftSide()
-    {
-        this.ariableElement.hidden = false;
     }
 
     hasValidNeighbors(slot)
     {
-        if((isNullOrEmpty(slot.previousElementSibling) || slot.previousElementSibling.dataset.blockType == "expression" || slot.previousElementSibling.dataset.blockType == "assignment") && (isNullOrEmpty(slot.nextElementSibling) || slot.nextElementSibling.dataset.blockType == "expression" )) 
+        if(this.subType == "none")
         {
-          return true;
+            return this.checkNeighbors(slot, ExpressionBlock.goodLeftSideNone, ExpressionBlock.goodRightSideNone);
         }
 
-        return false;
+        return this.checkNeighbors(slot, ExpressionBlock.goodLeftSide, ExpressionBlock.goodRightSide)
     }
 }
 
@@ -341,6 +479,18 @@ export class EqualityBlock extends CodeBlock
         ">",
         "<=",
         ">="
+    ]
+
+    static goodLeftSide =
+    [
+        "logic",
+        "scope"
+    ]
+
+    static goodRightSide =
+    [
+        "logic",
+        null
     ]
 
     constructor(subType, element = null)
@@ -380,12 +530,7 @@ export class EqualityBlock extends CodeBlock
 
     hasValidNeighbors(slot)
     {
-        if((slot.previousElementSibling.dataset.blockType == "logic" || (slot.previousElementSibling.dataset.blockType == "scope" && slot.previousElementSibling.dataset.subType != "else")) && (isNullOrEmpty(slot.nextElementSibling) || slot.nextElementSibling.dataset.blockType == "logic"))
-        {
-          return true;
-        }
-
-        return false;
+        return this.checkNeighbors(slot, EqualityBlock.goodLeftSide, EqualityBlock.goodRightSide);
     }
 }
 
@@ -395,6 +540,17 @@ export class LogicBlock extends CodeBlock
     [
         "or",
         "and"
+    ]
+
+    static goodLeftSide =
+    [
+        "equality"
+    ]
+
+    static goodRightSide =
+    [
+        "equality",
+        null
     ]
 
     constructor(subType, element = null)
@@ -424,12 +580,7 @@ export class LogicBlock extends CodeBlock
 
     hasValidNeighbors(slot)
     {
-        if((isNullOrEmpty(slot.previousElementSibling) || slot.previousElementSibling.dataset.blockType == "equality") && (isNullOrEmpty(slot.nextElementSibling) || slot.nextElementSibling.dataset.blockType == "equality"))
-        {
-          return true;
-        }
-
-        return false;
+        return this.checkNeighbors(slot, LogicBlock.goodLeftSide, LogicBlock.goodRightSide);
     }
 }
 
@@ -446,7 +597,7 @@ export class CodeSlot
     
 }
 
-function isNullOrEmpty(slot)
+export function isNullOrEmpty(slot)
 {
   if(slot == null || slot.className == "code-block-slot")
   {

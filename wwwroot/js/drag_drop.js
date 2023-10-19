@@ -1,4 +1,4 @@
-import { CodeSlot, AssignmentBlock, EqualityBlock, FunctionBlock,ExpressionBlock, LogicBlock, ScopeBlock } from "./classes/CodeBlock.js";
+import { CodeSlot, AssignmentBlock, EqualityBlock, FunctionBlock,ExpressionBlock, LogicBlock, ScopeBlock, isNullOrEmpty } from "./classes/CodeBlock.js";
   
 export function allowDrop(ev) 
 {
@@ -41,10 +41,6 @@ export function drop(ev)
       break;
     case "expression":
       block = new ExpressionBlock(draggedBlock.dataset.subType, element);
-      if(ev.target.previousElementSibling != null && ev.target.previousElementSibling.dataset.blockType == "expression")
-      {
-        block.makeRightSide();
-      }
       break;
     case "logic":
       block = new LogicBlock(draggedBlock.dataset.subType, element);
@@ -62,6 +58,7 @@ export function drop(ev)
   {
     return;
   }
+  else
   
   //replace the code slot with the block
   ev.target.replaceWith(block.element);
@@ -116,6 +113,7 @@ function removeBadLogic(element)
 {
   let previousElementSibling = element.previousElementSibling;
 
+  // avert ye eyes matey
   if(previousElementSibling != null && previousElementSibling.previousElementSibling != null)
   {
     if(previousElementSibling.previousElementSibling.dataset.blockType == "scope" && previousElementSibling.dataset.blockType == "logic")
