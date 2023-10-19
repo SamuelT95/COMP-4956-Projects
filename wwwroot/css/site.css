@@ -57,9 +57,20 @@ body {
 
 .var
 {
-    width: 25%;
+    height: 45%;
     aspect-ratio: 1;
     background-color: red;
+    border: black 2px solid;
+}
+
+.dummy > .lit
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 5vw;
+    aspect-ratio: 1;
+    background-color: white;
     border: black 2px solid;
 }
 

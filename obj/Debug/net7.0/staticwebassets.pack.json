@@ -21,40 +21,12 @@
       "PackagePath": "staticwebassets\\images\\b.png"
     },
     {
-      "Id": "C:\\Users\\holyc\\Desktop\\OLD-COMP-4956-Projects\\wwwroot\\js\\classes\\AssignmentBlock.js",
-      "PackagePath": "staticwebassets\\js\\classes\\AssignmentBlock.js"
-    },
-    {
       "Id": "C:\\Users\\holyc\\Desktop\\OLD-COMP-4956-Projects\\wwwroot\\js\\classes\\CodeBlock.js",
       "PackagePath": "staticwebassets\\js\\classes\\CodeBlock.js"
     },
     {
-      "Id": "C:\\Users\\holyc\\Desktop\\OLD-COMP-4956-Projects\\wwwroot\\js\\classes\\EqualityBlock.js",
-      "PackagePath": "staticwebassets\\js\\classes\\EqualityBlock.js"
-    },
-    {
-      "Id": "C:\\Users\\holyc\\Desktop\\OLD-COMP-4956-Projects\\wwwroot\\js\\classes\\ExpressionBlock.js",
-      "PackagePath": "staticwebassets\\js\\classes\\ExpressionBlock.js"
-    },
-    {
-      "Id": "C:\\Users\\holyc\\Desktop\\OLD-COMP-4956-Projects\\wwwroot\\js\\classes\\FunctionBlock.js",
-      "PackagePath": "staticwebassets\\js\\classes\\FunctionBlock.js"
-    },
-    {
-      "Id": "C:\\Users\\holyc\\Desktop\\OLD-COMP-4956-Projects\\wwwroot\\js\\classes\\LiteralBlock.js",
-      "PackagePath": "staticwebassets\\js\\classes\\LiteralBlock.js"
-    },
-    {
-      "Id": "C:\\Users\\holyc\\Desktop\\OLD-COMP-4956-Projects\\wwwroot\\js\\classes\\LogicBlock.js",
-      "PackagePath": "staticwebassets\\js\\classes\\LogicBlock.js"
-    },
-    {
-      "Id": "C:\\Users\\holyc\\Desktop\\OLD-COMP-4956-Projects\\wwwroot\\js\\classes\\ScopeBlock.js",
-      "PackagePath": "staticwebassets\\js\\classes\\ScopeBlock.js"
-    },
-    {
-      "Id": "C:\\Users\\holyc\\Desktop\\OLD-COMP-4956-Projects\\wwwroot\\js\\classes\\VariableBlock.js",
-      "PackagePath": "staticwebassets\\js\\classes\\VariableBlock.js"
+      "Id": "C:\\Users\\holyc\\Desktop\\OLD-COMP-4956-Projects\\wwwroot\\js\\classes\\ValueBlock.js",
+      "PackagePath": "staticwebassets\\js\\classes\\ValueBlock.js"
     },
     {
       "Id": "C:\\Users\\holyc\\Desktop\\OLD-COMP-4956-Projects\\wwwroot\\js\\drag_drop.js",

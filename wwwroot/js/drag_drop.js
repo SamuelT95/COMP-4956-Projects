@@ -149,7 +149,7 @@ function newScope(lineContainer)
   scopeContainer.className = "scope-container";
 
   let scopeDivider = document.createElement("div");
-  scopeDivider.className = "scope-divider";
+  scopeDivider.className = "scope-divider threequarters";
   scopeContainer.appendChild(scopeDivider);
 
 

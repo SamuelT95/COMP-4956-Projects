@@ -124,7 +124,6 @@ export class ScopeBlock extends CodeBlock
 
         if(element != null)
         {
-            this.expressionElement = element.children[1];
             return;
         }
 
@@ -139,11 +138,13 @@ export class ScopeBlock extends CodeBlock
 
         }
 
-        this.expressionElement = document.createElement("p");
-        this.expressionElement.className = "expression";
-        this.expressionElement.innerText = subType.toUpperCase();
+        this.element.className += " threequarters"
 
-        this.element.appendChild(this.expressionElement);
+        let expressionElement = document.createElement("p");
+        expressionElement.className = "expression";
+        expressionElement.innerText = subType.toUpperCase();
+
+        this.element.appendChild(expressionElement);
 
         this.addRightBar();
 
@@ -155,6 +156,11 @@ export class ScopeBlock extends CodeBlock
 
     hasValidNeighbors(slot)
     {
+
+        if(this.element.parentElement != null && this.element.parentElement.contains(slot))
+        {
+            return false;
+        }
         return this.checkNeighbors(slot, ScopeBlock.goodLeftSide, ScopeBlock.goodRightSide)
     }
 }
@@ -202,136 +208,6 @@ export class FunctionBlock extends CodeBlock
     }
 }
 
-export class LiteralBlock
-{
-    static count = 0;
-    static types = 
-    [
-        "string",
-        "number",
-        "boolean",
-        "float"
-    ]
-
-    constructor(type, value, element = null)
-    {
-        if (!LiteralBlock.types.includes(type))
-        {
-            throw new Error("Invalid sub type");
-        }
-
-        if(element != null)
-        {
-            this.element = element;
-            this.valueInput = element.children[0];
-            this.type = element.dataset.subType;
-            this.value = element.children[0].value;
-            return;
-        }
-
-        this.value = value;
-        this.type = type;
-
-        this.element = document.createElement("div");
-        this.element.id = "literal_" + LiteralBlock.count;
-        LiteralBlock.count++;
-        this.element.className = "literal-block";
-        this.element.dataset.blockType = "literal";
-        this.element.dataset.subType = type;
-        this.element.setAttribute("draggable", "true");
-
-        switch(type)
-        {
-            case "string":
-                this.valueInput = getStringInput();
-                break;
-            case "number":
-                this.valueInput = getNumberInput();
-                break;
-            case "boolean":
-                this.valueInput = getBooleanInput();
-                break;
-            case "float":
-                this.valueInput = getFloatInput();
-                break;
-        }
-
-        this.valueInput.value = value;
-        this.element.appendChild(this.valueInput);
-    }
-
-    getNumberInput()
-    {
-        let input = document.createElement("input");
-        input.type = "number";
-        input.className = "number-input";
-        return input;
-    }
-
-    getBooleanInput()
-    {
-        let input = document.createElement("input");
-        input.type = "checkbox";
-        input.className = "boolean-input";
-        return input;
-    }
-
-    getStringInput()
-    {
-        let input = document.createElement("input");
-        input.type = "text";
-        input.className = "string-input";
-        return input;
-    }
-
-    getFloatInput()
-    {
-        let input = document.createElement("input");
-        input.type = "number";
-        input.className = "float-input";
-        input.step = "any";
-        return input;
-    }
-}
-
-
-
-export class VariableBlock
-{
-    static count = 0;
-
-    constructor(type, value, name, element = null)
-    {
-        if(element != null)
-        {
-            this.element = element;
-            this.value = element.children[0];
-            this.valueLabel = element.children[1];
-            this.value.hidden = true;
-            return;
-        }
-
-        this.element = document.createElement("div");
-        this.element.className += "variable-" + name;
-        this.element.id = "variable_" + VariableBlock.count;
-        VariableBlock.count++;
-
-        this.element.dataset.blockType = "variable";
-        this.element.dataset.name = name;
-        this.element.dataset.type = type;
-
-        this.valueLabel = document.createElement("p");
-        this.valueLabel.className = "value-label";
-        this.valueLabel.innerText = name;
-
-        this.value = document.createElement("p");
-        this.value.className = "value";
-        this.value.innerText = value;
-
-        this.element.appendChild(this.value);
-        this.element.appendChild(this.valueLabel);
-    }
-}
 
 export class AssignmentBlock extends CodeBlock
 {
@@ -366,22 +242,26 @@ export class AssignmentBlock extends CodeBlock
 
         if(element != null)
         {
-            this.variableElement = element.children[1];
-            this.expressionElement = element.children[2];
             return;
         }
 
         
         this.element.className += " assignment-block";
-        this.variableElement = document.createElement("div");
-        this.variableElement.className = "varlit";
+        let variableElement = document.createElement("div");
+        variableElement.className = "var";
 
-        this.expressionElement = document.createElement("p");
-        this.expressionElement.className = "expression";
-        this.expressionElement.innerText = subType;
+        let expressionElement = document.createElement("p");
+        expressionElement.className = "expression";
+        expressionElement.innerText = subType;
 
-        this.element.appendChild(this.variableElement);
-        this.element.appendChild(this.expressionElement);
+        let secondVariableElement = document.createElement("div");
+        secondVariableElement.className = "varlit";
+  
+
+        this.element.appendChild(variableElement);
+        this.element.appendChild(expressionElement);
+        this.element.appendChild(secondVariableElement);
+
         this.addRightBar();
     }
 
@@ -399,13 +279,13 @@ export class ExpressionBlock extends CodeBlock
         "-",
         "*",
         "/",
-        "%",
-        "none"
+        "%"
     ]
 
     static goodLeftSide =
     [
-        "expression"
+        "expression",
+        "assignment",
     ]
 
     static goodRightSide =
@@ -414,16 +294,6 @@ export class ExpressionBlock extends CodeBlock
         null
     ]
 
-    static goodRightSideNone =
-    [
-        "expression",
-        null
-    ]
-
-    static goodLeftSideNone =
-    [
-        "assignment"
-    ]
 
     constructor(subType, element = null)
     {
@@ -439,18 +309,17 @@ export class ExpressionBlock extends CodeBlock
             return;
         }
 
-        this.element.className += " expression-block";
+        this.element.className += " expression-block threequarters";
 
         this.variableElement = document.createElement("div");
         this.variableElement.className = "varlit";
 
-        if(subType != "none")
-        {
-            this.expressionElement = document.createElement("p");
-            this.expressionElement.className = "expression";
-            this.expressionElement.innerText = subType;
-            this.element.appendChild(this.expressionElement);
-        }
+
+        this.expressionElement = document.createElement("p");
+        this.expressionElement.className = "expression";
+        this.expressionElement.innerText = subType;
+        this.element.appendChild(this.expressionElement);
+
 
         this.element.appendChild(this.variableElement);
 
@@ -459,12 +328,7 @@ export class ExpressionBlock extends CodeBlock
 
     hasValidNeighbors(slot)
     {
-        if(this.subType == "none")
-        {
-            return this.checkNeighbors(slot, ExpressionBlock.goodLeftSideNone, ExpressionBlock.goodRightSideNone);
-        }
-
-        return this.checkNeighbors(slot, ExpressionBlock.goodLeftSide, ExpressionBlock.goodRightSide)
+        return this.checkNeighbors(slot, ExpressionBlock.goodLeftSide, ExpressionBlock.goodRightSide);
     }
 }
 
@@ -568,7 +432,7 @@ export class LogicBlock extends CodeBlock
             return;
         }
 
-        this.element.className += " logic-block";
+        this.element.className += " logic-block threequarters";
 
         this.expressionElement = document.createElement("p");
         this.expressionElement.className = "expression";
