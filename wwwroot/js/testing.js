@@ -45,7 +45,7 @@ let variableBlock = new VariableBlock("x", "number", 6);
 let literalBlock = new DummyLiteralBlock("number");
 
 //test1.appendChild(variableBlock.element);
-//test1.appendChild(literalBlock.element);
+test1.appendChild(literalBlock.element);
 
 lineMaker(document.getElementById("test2"));
 

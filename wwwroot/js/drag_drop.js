@@ -49,7 +49,7 @@ export function drop(ev)
       block = new ScopeBlock(draggedBlock.dataset.subType, element);
       break;
     default:
-      block = new AssignmentBlock(draggedBlock.dataset.subType, element);
+      return;
       break;
   }
 

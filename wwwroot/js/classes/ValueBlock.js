@@ -1,5 +1,9 @@
+import { drag, allowDrop} from "../drag_drop.js";
+
 export class DummyLiteralBlock
 {
+    static count = 0;
+
     static types = 
     [
         "string",
@@ -15,10 +19,20 @@ export class DummyLiteralBlock
             throw new Error("Invalid sub type");
         }
 
+        DummyLiteralBlock.count++;
+        if(DummyLiteralBlock.count > 1)
+        {
+            throw new Error("Only one dummy literal block allowed");
+        }
+
         this.element = document.createElement("div");
+        this.element.id = "dummy_literal";
         this.element.className = "dummy lit";
-        this.element.dataset.blockType = "literal";
+        this.element.dataset.blockType = "dummy_literal";
         this.element.dataset.subType = type;
+
+        this.element.setAttribute("draggable", "true");
+        this.element.addEventListener("dragstart", function(event){drag(event)});
 
         let typeLabel = document.createElement("p");
         typeLabel.className = "type-label";

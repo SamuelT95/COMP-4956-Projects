@@ -1,4 +1,5 @@
 import { allowDrop, drop, drag } from "../drag_drop.js";
+import { LiteralBlock, DummyLiteralBlock, VariableBlock } from "./ValueBlock.js";
 
 class CodeBlock 
 {
@@ -89,6 +90,34 @@ class CodeBlock
             return false;
         }
     }
+
+    addVarLit()
+    {
+        let varLit = document.createElement("div");
+        varLit.className = "varlit";
+        varLit.addEventListener("dragover", function(event){allowDrop(event)});
+        varLit.addEventListener("drop", function(event){varLitDrop(event)});
+        this.element.appendChild(varLit);
+
+        
+    }
+
+    addVar()
+    {
+        let varDiv = document.createElement("div");
+        varDiv.className = "var";
+        varDiv.addEventListener("dragover", function(event){allowDrop(event)});
+        varDiv.addEventListener("drop", function(event){varDrop(event)});
+        this.element.appendChild(varDiv);
+    }
+
+    addExpression(string)
+    {
+        let expressionElement = document.createElement("p");
+        expressionElement.className = "expression";
+        expressionElement.innerText = string;
+        this.element.appendChild(expressionElement);
+    }
 }
 
 
@@ -140,12 +169,7 @@ export class ScopeBlock extends CodeBlock
 
         this.element.className += " threequarters"
 
-        let expressionElement = document.createElement("p");
-        expressionElement.className = "expression";
-        expressionElement.innerText = subType.toUpperCase();
-
-        this.element.appendChild(expressionElement);
-
+        this.addExpression(subType.toUpperCase());
         this.addRightBar();
 
         if(this.subType == "else")
@@ -184,21 +208,13 @@ export class FunctionBlock extends CodeBlock
 
         if(element != null)
         {
-            this.inputElement = element.children[1];
-            this.outputElement = element.children[2];
             return;
         }
 
         this.element.className += " function-block";
 
-        this.inputElement = document.createElement("div");
-        this.outputElement = document.createElement("div");
-
-        this.inputElement.className = "varlit";
-        this.outputElement.className = "var";
-
-        this.element.appendChild(this.inputElement);
-        this.element.appendChild(this.outputElement);
+        this.addVarLit();
+        this.addVar();
         this.addRightBar();
     }
 
@@ -247,21 +263,10 @@ export class AssignmentBlock extends CodeBlock
 
         
         this.element.className += " assignment-block";
-        let variableElement = document.createElement("div");
-        variableElement.className = "var";
 
-        let expressionElement = document.createElement("p");
-        expressionElement.className = "expression";
-        expressionElement.innerText = subType;
-
-        let secondVariableElement = document.createElement("div");
-        secondVariableElement.className = "varlit";
-  
-
-        this.element.appendChild(variableElement);
-        this.element.appendChild(expressionElement);
-        this.element.appendChild(secondVariableElement);
-
+        this.addVar();
+        this.addExpression(subType);
+        this.addVarLit();
         this.addRightBar();
     }
 
@@ -311,18 +316,8 @@ export class ExpressionBlock extends CodeBlock
 
         this.element.className += " expression-block threequarters";
 
-        this.variableElement = document.createElement("div");
-        this.variableElement.className = "varlit";
-
-
-        this.expressionElement = document.createElement("p");
-        this.expressionElement.className = "expression";
-        this.expressionElement.innerText = subType;
-        this.element.appendChild(this.expressionElement);
-
-
-        this.element.appendChild(this.variableElement);
-
+        this.addExpression(subType);
+        this.addVarLit();
         this.addRightBar();
     }
 
@@ -368,27 +363,14 @@ export class EqualityBlock extends CodeBlock
 
         if(element != null)
         {   
-            this.variableElement = element.children[1];
-            this.expressionElement = element.children[2];
-            this.secondVariableElement = element.children[3];
             return;
         }
 
         this.element.className += " equality-block";
 
-        this.variableElement = document.createElement("div");
-        this.variableElement.className = "varlit";
-
-        this.expressionElement = document.createElement("p");
-        this.expressionElement.className = "expression";
-        this.expressionElement.innerText = subType;
-
-        this.secondVariableElement = document.createElement("div");
-        this.secondVariableElement.className = "varlit";
-
-        this.element.appendChild(this.variableElement);
-        this.element.appendChild(this.expressionElement);
-        this.element.appendChild(this.secondVariableElement);
+        this.addVarLit();
+        this.addExpression(subType);
+        this.addVarLit();
         this.addRightBar();
     }
 
@@ -428,17 +410,12 @@ export class LogicBlock extends CodeBlock
 
         if(element != null)
         {
-            this.expressionElement = element.children[1];
             return;
         }
 
         this.element.className += " logic-block threequarters";
 
-        this.expressionElement = document.createElement("p");
-        this.expressionElement.className = "expression";
-        this.expressionElement.innerText = subType.toUpperCase();
-
-        this.element.appendChild(this.expressionElement);
+        this.addExpression(subType.toUpperCase());
         this.addRightBar();
     }
 
@@ -469,4 +446,40 @@ export function isNullOrEmpty(slot)
   }
 
   return false;
+}
+
+function varDrop(ev)
+{
+    ev.preventDefault();
+
+    //ensure were only dropping into a varlit
+    if(ev.target.className != "varlit")
+    {
+      return;
+    }
+  
+    // get the stored element id
+    let elementId = ev.dataTransfer.getData("key");
+    let draggedBlock = document.getElementById(elementId);
+
+
+    switch(draggedBlock.dataset.blockType)
+    {
+        case "dummy_literal":
+            let literalBlock = new LiteralBlock(draggedBlock.dataset.subType);
+            ev.target.replaceWith(new LiteralBlock(draggedBlock.dataset.subType).element);
+            break;
+        case "variable":
+            let variableBlock = new VariableBlock(draggedBlock.dataset.subType, draggedBlock.dataset.varType, draggedBlock.dataset.varValue);
+            ev.target.replaceWith(variableBlock.element);
+            break;
+        default:
+            return;
+            break;
+    }
+}
+
+function varLitDrop(ev)
+{
+
 }
