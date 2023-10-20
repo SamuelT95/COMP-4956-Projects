@@ -20,3 +20,56 @@ p[b-dr5i30qvxp]
     box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
 }
   
+.content-wrapper[b-dr5i30qvxp] {
+    background-color: rgb(231, 231, 231);   
+    min-height: 100vh; 
+    border-radius: 20px;
+}
+
+.tab-headers[b-dr5i30qvxp] {
+    display: flex;
+    border-bottom: 1px solid #ccc;
+}
+
+.tab[b-dr5i30qvxp] {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 0 5px;
+    border-radius: 15px 15px 0 0;
+    background-color: #fff;
+    box-shadow: 0px 0px 5px rgba(0,0,0,0.1);
+    position: relative; 
+    top: 1px; 
+    transition: all 0.3s ease;
+}
+
+.tab:hover[b-dr5i30qvxp] {
+    background-color: #f0f0f0;
+}
+
+.tab.active[b-dr5i30qvxp] {
+    background-color: #f0f0f0;
+    box-shadow: 0px -2px 5px rgba(0,0,0,0.1) inset; 
+}
+
+.close-tab[b-dr5i30qvxp] {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: 10px;
+    font-weight: bold;
+}
+
+.tab-content[b-dr5i30qvxp] {
+    border: 1px solid #ddd;
+    border-radius: 0 0 15px 15px;
+    padding: 20px;
+    box-shadow: 0px 5px 10px rgba(0,0,0,0.1);
+}
+
+
+.tab-content.active[b-dr5i30qvxp] {
+    display: block;
+}
+
+

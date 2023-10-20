@@ -5,10 +5,29 @@
 }
 @section Scripts
 {
-
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="~/js/tabs.js"></script>
 }
 
-<p>Hi</p>
+<div class="content-wrapper">
+    <div class="tab-headers">
+        <div class="tab active" data-tab-id="1">
+            <span class="tab-title">Tab 1</span>
+            <button class="close-tab">x</button>
+        </div>
+        <!-- Dynamically added tabs will appear here -->
+        <button id="addTab">+</button>
+    </div>
+
+    <!-- Tab content -->
+    <div class="tab-contents">
+        <div class="tab-content active" data-tab-id="1">
+            Content for Tab 1
+        </div>
+        <!-- Dynamically added tab contents will appear here -->
+    </div>
+</div>
+
   <nav
        id="sidebarMenu"
        class="collapse d-lg-block sidebar collapse bg-white"
